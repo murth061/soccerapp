@@ -1,1 +1,1 @@
-web: gunicorn cscifinal
+web: flask db upgrade; flask translate compile; gunicorn cscifinal:soccerapp
