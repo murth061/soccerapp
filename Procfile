@@ -1,1 +1,0 @@
-web: gunicorn soccerapp:cscifinal
