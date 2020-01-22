@@ -26,6 +26,6 @@
         </nav>
         <h1> Look at these Premier League live Standings!</h1>
         {% for i in range(0,19) %}
-              <li>{{rank[i]}}  <img src={{logos[i]}}> {{name[i]}} Points: {{points[i]}}   </li>
+              <li>{{rank[i]}}  <img src={{logos[i]}} style="width:25px;height:25px;"> {{name[i]}} Points: {{points[i]}}   </li>
             {% endfor %}
 {% endblock %}
