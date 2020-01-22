@@ -1,1 +1,1 @@
-web: gunicorn cscifinal:soccerapp
+web: gunicorn soccerapp:cscifinal
