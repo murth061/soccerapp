@@ -24,8 +24,16 @@
                 </li>
             </ul>
         </nav>
-        <h1> Look at these Premier League live Standings!</h1>
-        {% for i in range(0,19) %}
-              <li>{{rank[i]}}  <img src={{logos[i]}} style="width:25px;height:25px;"> {{name[i]}} Points: {{points[i]}}   </li>
-            {% endfor %}
+{% endblock %}
+
+{% block app_premnews %}
+<p>Recent Club News</p>
+<a href={{article_url}}>{{article_name}}</a>
+<p>{{article_description}}<p>
+{% endblock %}
+
+{% block app_premstat %}
+  {% for i in range(0,20) %}
+        <li>{{rank[i]}}  <img src={{logos[i]}} style="width:25px;height:25px;"> {{name[i]}} Points: {{points[i]}}   </li>
+        {% endfor %}
 {% endblock %}

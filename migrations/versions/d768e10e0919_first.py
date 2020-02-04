@@ -1,8 +1,8 @@
-"""users table
+"""first
 
-Revision ID: d424c53369a3
+Revision ID: d768e10e0919
 Revises: 
-Create Date: 2020-01-22 08:56:18.948987
+Create Date: 2020-02-04 00:57:56.205128
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'd424c53369a3'
+revision = 'd768e10e0919'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -25,8 +25,10 @@ def upgrade():
     sa.Column('password_hash', sa.String(length=128), nullable=True),
     sa.Column('about_me', sa.String(length=140), nullable=True),
     sa.Column('last_seen', sa.DateTime(), nullable=True),
+    sa.Column('club', sa.String(length=64), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_index(op.f('ix_user_club'), 'user', ['club'], unique=False)
     op.create_index(op.f('ix_user_email'), 'user', ['email'], unique=True)
     op.create_index(op.f('ix_user_username'), 'user', ['username'], unique=True)
     op.create_table('followers',
@@ -54,5 +56,6 @@ def downgrade():
     op.drop_table('followers')
     op.drop_index(op.f('ix_user_username'), table_name='user')
     op.drop_index(op.f('ix_user_email'), table_name='user')
+    op.drop_index(op.f('ix_user_club'), table_name='user')
     op.drop_table('user')
     # ### end Alembic commands ###

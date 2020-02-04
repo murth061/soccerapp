@@ -85,7 +85,7 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
+        user = User(username=form.username.data, email=form.email.data, club=form.club.data)
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -163,6 +163,19 @@ def unfollow(username):
 @app.route('/explore')
 @login_required
 def explore():
+#api for club news
+    club_search = current_user.club
+    url_news = ('https://newsapi.org/v2/everything?'
+       'q='+club_search+'-'+'FC''&'
+       'from=2020-02-04&'
+       'sortBy=popularity&'
+       'apiKey=988fd903e8184c78b30dd2b6910830ca')
+    response1 = requests.get(url_news)
+    response_news = json.loads(response1.text)
+    article_url = response_news['articles'][0]['url']
+    article_name = response_news['articles'][0]['title']
+    article_description = response_news['articles'][0]['description']
+# posts from other users
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -170,16 +183,24 @@ def explore():
         if posts.has_next else None
     prev_url = url_for('explore', page=posts.prev_num) \
         if posts.has_prev else None
+#api for premier league table
     url = "https://api-football-v1.p.rapidapi.com/v2/leagueTable/524"
-
     headers = {
         'x-rapidapi-host': "api-football-v1.p.rapidapi.com",
         'x-rapidapi-key': "aaa4b765bbmsh39cc101c8d0dbf9p16a3bbjsne16a4ffc3013"
         }
-
     response = requests.request("GET", url, headers=headers)
-
-    print("api call explore")
-
+    json_data = json.loads(response.text)
+    i = 0
+    rank = []
+    name = []
+    points = []
+    logos = []
+    while(i <20):
+        rank.append(json_data['api']['standings'][0][i]['rank'])
+        name.append(json_data['api']['standings'][0][i]['teamName'])
+        logos.append(json_data['api']['standings'][0][i]['logo'])
+        points.append(json_data['api']['standings'][0][i]['points'])
+        i = i + 1
     return render_template('index.html', title='Explore', posts=posts.items,
-                           next_url=next_url, prev_url=prev_url)
+                           next_url=next_url, prev_url=prev_url,rank = rank, logos = logos, points = points, name = name, article_url=article_url, article_name=article_name,article_description=article_description)

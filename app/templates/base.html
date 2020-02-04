@@ -2,6 +2,7 @@
 
 {% block title %}
     {% if title %}{{ title }} - SoccerChat{% else %}Welcome to SoccerChat!{% endif %}
+
 {% endblock %}
 
 {% block navbar %}
@@ -35,9 +36,18 @@
 {% endblock %}
 
 
-
   {% block content %}
-      <div class="container">
+  <div style="margin:7px; width:800px;">
+    <p>Premier league Table API credit to <a href="https://rapidapi.com/api-sports/api/api-football">RapidAPI</a></p>
+    <p> <a href="https://newsapi.org">Powered by News API</a></p>
+  {% block app_premnews %}{% endblock %}
+  </div>
+      <div style="width:800px;">
+        <div style="margin:7px; border:3px solid black;width:270px; float:left;">
+          Look at these Premier League Live Standings!
+          <p>{% block app_premstat %}{% endblock %}</p>
+          </div>
+        <div style="width:500px; float:right;">
           {% with messages = get_flashed_messages() %}
           {% if messages %}
               {% for message in messages %}
@@ -46,7 +56,13 @@
           {% endif %}
           {% endwith %}
 
-          {# application content needs to be provided in the app_content block #}
           {% block app_content %}{% endblock %}
+          </div>
       </div>
   {% endblock %}
+  {% block arsenal %}
+  <footer>
+    <p>Premier league Table API credit to <a href="https://rapidapi.com/api-sports/api/api-football">RapidAPI</a></p>
+    <p> <a href="https://newsapi.org">Powered by News API</a></p>
+    </footer>
+{% endblock %}
