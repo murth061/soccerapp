@@ -28,8 +28,10 @@
 
 {% block app_premnews %}
 <p>Recent Club News</p>
-<a href={{article_url}}>{{article_name}}</a>
-<p>{{article_description}}<p>
+  {% for i in range(0,9) %}
+        <p><li><a href={{article_url[i]}}>{{article_name[i]}}</a></li>
+        <br>{{article_description[i]}}</br></p>
+        {% endfor %}
 {% endblock %}
 
 {% block app_premstat %}

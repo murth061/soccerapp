@@ -19,6 +19,26 @@ def index():
         db.session.commit()
         flash('Your post is now live!')
         return redirect(url_for('index'))
+    #news api
+    #api for club news
+    club_search = current_user.club
+    url_news = ('https://newsapi.org/v2/everything?'
+       'q='+club_search+'-'+'FC''&'
+       'from=2020-02-04&'
+       'sortBy=popularity&'
+       'apiKey=988fd903e8184c78b30dd2b6910830ca')
+    response1 = requests.get(url_news)
+    response_news = json.loads(response1.text)
+    i = 0
+    article_url = []
+    article_name = []
+    article_description = []
+    while(i<10):
+        article_url.append(response_news['articles'][i]['url'])
+        article_name.append(response_news['articles'][i]['title'])
+        article_description.append(response_news['articles'][i]['description'])
+        i = i+1
+    #posts
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(
         page, app.config['POSTS_PER_PAGE'], False)
@@ -46,9 +66,8 @@ def index():
         logos.append(json_data['api']['standings'][0][i]['logo'])
         points.append(json_data['api']['standings'][0][i]['points'])
         i = i + 1
-    return render_template('index.html', title='Home', form=form,
-                           posts=posts.items, next_url=next_url,
-                           prev_url=prev_url, rank = rank, logos = logos, points = points, name = name)
+    return render_template('index.html', title='Explore', posts=posts.items,
+                    next_url=next_url, prev_url=prev_url,rank = rank, logos = logos, points = points, name = name, article_url=article_url, article_name=article_name,article_description=article_description)
 
 
 
@@ -188,9 +207,15 @@ def explore():
        'apiKey=988fd903e8184c78b30dd2b6910830ca')
     response1 = requests.get(url_news)
     response_news = json.loads(response1.text)
-    article_url = response_news['articles'][0]['url']
-    article_name = response_news['articles'][0]['title']
-    article_description = response_news['articles'][0]['description']
+    i = 0
+    article_url = []
+    article_name = []
+    article_description = []
+    while(i<20):
+        article_url.append(response_news['articles'][i]['url'])
+        article_name.append(response_news['articles'][i]['title'])
+        article_description.append(response_news['articles'][i]['description'])
+        i = i+1
 # posts from other users
     page = request.args.get('page', 1, type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(
