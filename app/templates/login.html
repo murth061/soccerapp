@@ -3,6 +3,9 @@
 
 {% block app_content %}
     <h1>Sign In</h1>
+    <p>Feel free to use the following login:</p>
+    <p>Username: guest</p>
+    <p>Password: guest</p>
     <div class="row">
         <div class="col-md-4">
             {{ wtf.quick_form(form) }}
@@ -10,4 +13,9 @@
     </div>
     <br>
     <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+{% endblock %}
+{% block app_premstat %}
+  {% for i in range(0,20) %}
+        <li>{{rank[i]}}  <img src={{logos[i]}} style="width:25px;height:25px;"> {{name[i]}} Points: {{points[i]}}   </li>
+        {% endfor %}
 {% endblock %}

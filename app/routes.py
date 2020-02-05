@@ -46,11 +46,6 @@ def index():
         logos.append(json_data['api']['standings'][0][i]['logo'])
         points.append(json_data['api']['standings'][0][i]['points'])
         i = i + 1
-
-
-
-
-
     return render_template('index.html', title='Home', form=form,
                            posts=posts.items, next_url=next_url,
                            prev_url=prev_url, rank = rank, logos = logos, points = points, name = name)
@@ -72,7 +67,28 @@ def login():
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-    return render_template('login.html', title='Sign In', form=form)
+
+    url = "https://api-football-v1.p.rapidapi.com/v2/leagueTable/524"
+    headers = {
+        'x-rapidapi-host': "api-football-v1.p.rapidapi.com",
+        'x-rapidapi-key': "aaa4b765bbmsh39cc101c8d0dbf9p16a3bbjsne16a4ffc3013"
+        }
+
+    response = requests.request("GET", url, headers=headers)
+    json_data = json.loads(response.text)
+    i = 0
+    rank = []
+    name = []
+    points = []
+    logos = []
+    while(i <20):
+        rank.append(json_data['api']['standings'][0][i]['rank'])
+        name.append(json_data['api']['standings'][0][i]['teamName'])
+        logos.append(json_data['api']['standings'][0][i]['logo'])
+        points.append(json_data['api']['standings'][0][i]['points'])
+        i = i + 1
+    return render_template('login.html', title='Sign In', form=form, rank = rank, logos = logos, points = points, name = name)
+
 
 @app.route('/logout')
 def logout():
