@@ -23,9 +23,10 @@ def index():
     #api for club news
     club_search = current_user.club
     url_news = ('https://newsapi.org/v2/everything?'
-       'q='+club_search+'-'+'FC''&'
-       'from=2020-02-04&'
+       'q='+club_search+' '+'Premier League'+'&'
+       'from=2020-09-04&'
        'sortBy=popularity&'
+       'language=en&'
        'apiKey=988fd903e8184c78b30dd2b6910830ca')
     response1 = requests.get(url_news)
     response_news = json.loads(response1.text)
@@ -201,9 +202,10 @@ def explore():
 #api for club news
     club_search = current_user.club
     url_news = ('https://newsapi.org/v2/everything?'
-       'q='+club_search+'-'+'FC''&'
+       'q='+club_search+' '+'Premier League'+'&'
        'from=2020-02-04&'
        'sortBy=popularity&'
+       'language=en&'
        'apiKey=988fd903e8184c78b30dd2b6910830ca')
     response1 = requests.get(url_news)
     response_news = json.loads(response1.text)

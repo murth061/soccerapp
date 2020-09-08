@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% import 'bootstrap/wtf.html' as wtf %}
 
+
+
 {% block app_content %}
     <h1>Hi, {{ current_user.username }}!</h1>
      {% if form %}
@@ -33,8 +35,8 @@
         <br>{{article_description[i]}}</br></p>
         {% endfor %}
 {% endblock %}
-
 {% block app_premstat %}
+Live Premier League Table!
   {% for i in range(0,20) %}
         <li>{{rank[i]}}  <img src={{logos[i]}} style="width:25px;height:25px;"> {{name[i]}} Points: {{points[i]}}   </li>
         {% endfor %}
