@@ -203,7 +203,7 @@ def explore():
     club_search = current_user.club
     url_news = ('https://newsapi.org/v2/everything?'
        'q='+club_search+' '+'Premier League'+'&'
-       'from=2020-02-04&'
+       'from=2020-09-04&'
        'sortBy=popularity&'
        'language=en&'
        'apiKey=988fd903e8184c78b30dd2b6910830ca')
